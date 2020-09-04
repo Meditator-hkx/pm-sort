@@ -8,14 +8,14 @@ Then you type `make`, a **sort** file, which is executable, will be generated
 
 Type `./sort` to see the help information and you can see the guideline below:
 
-'''
+```
 /sort nvm_type total_num mem_num sort_method
 nvm_type: 0 = dram_emulated; 1 = optane PM
 total_num: 100, 1000, 10000, ... decides NVM space size
 mem_num: 10, 100, 1000, ... decides DRAM space size
 alpha: 0,1,2,..., 10 tunes segmentSort only
 sort_method: 0 = selectSort, 1 = selectSortExtra, 2 = quickSortNVM,  3 = quickSortMem, 4 = ptrQuickSort, 5 = binarySort, 6 = externalSort, 7 = segmentSort, 8 = segmentSortExter
-'''
+```
 
 Finally, you can choose the device you want to use, the total number records to be sorted, available DRAM space, and sorting method you want to test.
 
