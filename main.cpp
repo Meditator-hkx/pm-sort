@@ -8,6 +8,8 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 
+#define MAP_FILE "/home/kaixin/pmdir/pmfile"
+
 int main(int argc, char *argv[]) {
     // debug
     int nvm_type, total_num, mem_num, sort_method;
@@ -46,7 +48,7 @@ int main(int argc, char *argv[]) {
         out_base = nvm_base + RECORD_SIZE * total_num;
     }
     else {
-        int fd = open("/home/kaixin/pmdir/pmfile", O_CREAT | O_RDWR);
+        int fd = open(MAP_FILE, O_CREAT | O_RDWR);
         nvm_base = (char *)mmap(0, RECORD_SIZE * total_num * 4, \
                 PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
         // cout << "nvm address: " << (uint64_t)nvm_base << endl;            
