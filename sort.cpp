@@ -197,7 +197,7 @@ void binaryInsert(BiNode *root, Record &record, BiNode *free_nvm) {
 }
 // write (key, ptr) to NVM as sorted file
 void binaryScan(BiNode *root, KeyPointer *out_ptr, int num) {
-    vector<KeyPointer> outs(num);
+    vector<KeyPointer> outs;
     binaryScanRecur(root, outs);
     for (int i = 0;i < outs.size();i++) {
         memcpy(&out_ptr[i], &outs[i], KEYPTR_SIZE);
