@@ -152,28 +152,26 @@ void ptrQuickSortReal(KeyPointer *pointers, int low, int high) {
 }
 
 // O(NlogN) reads and writes
-void binarySort(Record *records, KeyPointer *pointers, BiNode *free_nvm, int num) {
+void binarySort(Record *records, Record *outs, BiNode *free_nvm, int num) {
     // build a binary tree for all elements
     // BiNode *root = new BiNode;
     BiNode *root = nvm_alloc(free_nvm);
-    root->key = records[0].key;
-    root->pr = &records[0];
+    memcpy(&root->record, &records[0], RECORD_SIZE);
     root->left = root->right = NULL;
     for (int i = 1;i < num;i++) {
         binaryInsert(root, records[i], free_nvm);
     }
-    binaryScan(root, pointers, num);
+    binaryScan(root, outs, num);
 }
 
 void binaryInsert(BiNode *root, Record &record, BiNode *free_nvm) {
     BiNode *newNode;
 
-    if (record.key >= root->key) {
+    if (record.key >= root->record.key) {
         if (root->right == NULL) {
             // newNode = new BiNode;
             newNode = nvm_alloc(free_nvm);
-            newNode->key = record.key;
-            newNode->pr = &record;
+            memcpy(&newNode->record, &record, RECORD_SIZE);
             newNode->left = newNode->right = NULL;
             root->right = newNode;
         }
@@ -185,8 +183,7 @@ void binaryInsert(BiNode *root, Record &record, BiNode *free_nvm) {
         if (root->left == NULL) {
             // newNode = new BiNode;
             newNode = nvm_alloc(free_nvm);
-            newNode->key = record.key;
-            newNode->pr = &record;
+            memcpy(&newNode->record, &record, RECORD_SIZE);
             newNode->left = newNode->right = NULL;
             root->left = newNode;
         }
@@ -196,31 +193,25 @@ void binaryInsert(BiNode *root, Record &record, BiNode *free_nvm) {
     }
 }
 // write (key, ptr) to NVM as sorted file
-void binaryScan(BiNode *root, KeyPointer *out_ptr, int num) {
-    vector<KeyPointer> outs(num);
-    binaryScanRecur(root, outs);
-    for (int i = 0;i < outs.size();i++) {
-        memcpy(&out_ptr[i], &outs[i], KEYPTR_SIZE);
-    }
+void binaryScan(BiNode *root, Record *outs, int num) {
+    int i = 0;
+    binaryScanRecur(root, outs, i);
 }
-void binaryScanRecur(BiNode *root, vector<KeyPointer> &outs) {
+void binaryScanRecur(BiNode *root, Record *outs, int &i) {
     // read left
     // read middle
     // read right
-    KeyPointer kp;
-
     if (root == NULL) {
         return;
     }
 
     if (root->left) {
-        binaryScanRecur(root->left, outs);
+        binaryScanRecur(root->left, outs, i);
     }
-    kp.key = root->key;
-    kp.pr = root->pr;
-    outs.push_back(kp);
+    memcpy(outs+i,  &root->record, RECORD_SIZE);
+    i++;
     if (root->right) {
-        binaryScanRecur(root->right, outs);
+        binaryScanRecur(root->right, outs, i);
     }
 }
 

@@ -13,17 +13,18 @@
 typedef struct {
     uint64_t key;
     char value[VALUE_SIZE];
-} Record __attribute__((packed));
+} __attribute__((packed)) Record;
 
 typedef struct {
     uint64_t key;
     Record *pr;
-} KeyPointer __attribute__((packed));
+} __attribute__((packed)) KeyPointer;
 
 // In-NVM / In-DRAM
 typedef struct BiNode {
-    uint64_t key;
-    Record *pr;
+    // uint64_t key;
+    // Record *pr;
+    Record record;
     BiNode *left;
     BiNode *right;
 } BiNode;

@@ -8,8 +8,6 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 
-#define MAP_FILE "/home/kaixin/pmdir/pmfile"
-
 int main(int argc, char *argv[]) {
     // debug
     int nvm_type, total_num, mem_num, sort_method;
@@ -48,7 +46,7 @@ int main(int argc, char *argv[]) {
         out_base = nvm_base + RECORD_SIZE * total_num;
     }
     else {
-        int fd = open(MAP_FILE, O_CREAT | O_RDWR);
+        int fd = open("/home/kaixin/pmdir/pmfile", O_CREAT | O_RDWR);
         nvm_base = (char *)mmap(0, RECORD_SIZE * total_num * 4, \
                 PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
         // cout << "nvm address: " << (uint64_t)nvm_base << endl;            
@@ -104,22 +102,11 @@ int main(int argc, char *argv[]) {
     }
     else if (sort_method == 4) {
         cout << "ptrQuickSort: ";
-        // transform records to (key, pointer) pairs
-        for (int i = 0;i < total_num;i++) {
-            outptr[i].key = records[i].key;
-            outptr[i].pr = &records[i];
-        }
-
-        endTimer(endt);
-        cout << "records transforming ";
-        singleLatency();
-        cout << "; ";
-        startTimer(start);
         ptrQuickSort(records, ptrbuffer, outptr, total_num);
     }
     else if (sort_method == 5) {
         cout << "binarySort: ";
-        binarySort(records, outptr, bi_base, total_num);
+        binarySort(records, outfile, bi_base, total_num);
     }
     else if (sort_method == 6) {
         cout << "externalSort: ";

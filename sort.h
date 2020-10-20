@@ -29,13 +29,13 @@ void mergeSortReal(Record *nvm_records, Record *dram_records, Record *outs, int 
 
 
 // void binarySort(Record *records, int num);
-void binarySort(Record *records, KeyPointer *pointers, BiNode *free_nvm, int num);
+void binarySort(Record *records, Record *outs, BiNode *free_nvm, int num);
 // void binaryInsert(BiNode *root, Record &record);
 void binaryInsert(BiNode *root, Record &record, BiNode *free_nvm);
 // void binaryScan(BiNode *root, Record *records, int num);
-void binaryScan(BiNode *root, KeyPointer *pointers, int num);
+void binaryScan(BiNode *root, Record *records, int num);
 // void binaryScanRecur(BiNode *root, vector<uint64_t> &outs);
-void binaryScanRecur(BiNode *root, vector<KeyPointer> &outs);
+void binaryScanRecur(BiNode *root,Record *outs, int &i);
 
 void segmentSort(Record *records, Record *out, int num, float alpha);
 void segmentSortExt(Record *nvm_records, Record *dram_records, Record *outs, int total_num, int mem_num, float alpha);
