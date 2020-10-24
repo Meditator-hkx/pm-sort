@@ -137,7 +137,7 @@ void ptrQuickSortReal(KeyPointer *pointers, int low, int high) {
                 i++;
             }
 
-            while(i < j && pointers[i].key <= pointers[j].key)
+            while(i < j && pointers[i].key <= precord.key)
                 i++;
             if (i < j) {
                 memcpy(&pointers[j], &pointers[i], KEYPTR_SIZE);
