@@ -140,7 +140,6 @@ int main(int argc, char *argv[]) {
         switch(sort_method) {
         case 0:
         case 2:
-        case 5:
             readKV(records, readbuf, total_num);
             break;
         case 1:
@@ -151,6 +150,7 @@ int main(int argc, char *argv[]) {
             readKV(outfile, readbuf, total_num);
             break;
         case 4:
+        case 5:
             readPtr(outptr, readbuf, total_num);
             break;
         default:
